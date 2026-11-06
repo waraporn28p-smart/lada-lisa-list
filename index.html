@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lada-Lisa-List — สิ่งที่ต้องทำ &amp; วันหมดอายุ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe8de; --panel:#ffffff; --soft:#f8f4ee; --line:#e9e1d5; --frame:#ded2c0;
+  --text:#4a443c; --muted:#8e8578; --faint:#b6ac9d;
+  --fontbody:"Prompt","Noto Sans Thai",system-ui,-apple-system,sans-serif;
+  --fontcute:"Mali","Prompt","Noto Sans Thai",cursive,sans-serif;
+
+  --mint:#dcf0e7;  --mint-d:#4f8f78;
+  --peach:#ffe6d8; --peach-d:#c17a52;
+  --lav:#e9e4f9;   --lav-d:#7a69b4;
+  --sky:#dcecfa;   --sky-d:#5588ad;
+  --lemon:#fdf2cf; --lemon-d:#a8872f;
+  --rose:#fce0e6;  --rose-d:#bd6a7d;
+  --teal:#d6f0f2;  --teal-d:#3f8a90;
+
+  --r:20px;
+  --shadow:0 2px 6px rgba(70,80,90,.04), 0 10px 26px rgba(70,80,90,.05);
+  --navh:206px;
+}
+body.menu-closed{ --navh:62px }
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg)}
+body{
+  color:var(--text);
+  font-family:var(--fontbody);
+  font-size:16.5px;line-height:1.6;-webkit-text-size-adjust:100%;
+}
+.app{
+  max-width:560px;margin:12px auto 0;min-height:calc(100vh - 12px);
+  background:#fffdfa;border:2.5px solid var(--frame);border-radius:30px 30px 0 0;
+  padding:18px 16px calc(var(--navh) + 30px);transition:padding-bottom .25s;
+  box-shadow:0 6px 30px rgba(120,105,85,.10);
+}
+
+header{display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  padding-bottom:13px;border-bottom:2px dashed var(--line)}
+.logo{width:48px;height:48px;flex:none;border-radius:16px;background:var(--mint);
+  border:2px solid #bfe3d3;display:grid;place-items:center;font-size:1.35rem}
+header h1{margin:0;font-family:var(--fontcute);font-size:1.26rem;font-weight:700;letter-spacing:.2px}
+header p{margin:0;font-size:.8rem;color:var(--muted)}
+
+/* alert banner */
+.alert{
+  display:flex;gap:10px;align-items:flex-start;background:var(--peach);color:var(--peach-d);
+  border:2px solid #f5cdb6;border-radius:17px;padding:12px 13px;margin-bottom:12px;font-size:.89rem;line-height:1.55;
+}
+.alert[hidden]{display:none}
+.alert .ic{font-size:1.1rem;line-height:1.3}
+.alert b{font-weight:700}
+.alert button{
+  margin-top:7px;border:0;background:#fff;color:var(--peach-d);font-family:inherit;
+  font-size:.8rem;font-weight:600;padding:7px 13px;border-radius:99px;cursor:pointer;
+}
+
+.hero{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow);margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.ring{width:56px;height:56px;flex:none;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:.82rem;font-weight:700;color:var(--mint-d)}
+.hero .info{flex:1;min-width:0}
+.hero .info b{display:block;font-family:var(--fontcute);font-size:1.02rem;font-weight:600}
+.hero .info span{font-size:.82rem;color:var(--muted)}
+
+.screen[hidden]{display:none}
+.stitle{display:flex;align-items:center;gap:8px;margin:0 2px 11px}
+.stitle i{font-size:1.1rem;font-style:normal}
+.stitle h2{margin:0;font-family:var(--fontcute);font-size:1.1rem;font-weight:600}
+.stitle .cnt{margin-inline-start:auto;font-size:.78rem;color:var(--muted);background:var(--soft);padding:3px 10px;border-radius:99px}
+
+.card{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:16px}
+.card + .card{margin-top:11px}
+.fld{margin-bottom:14px}
+.fld:last-child{margin-bottom:0}
+.fld label{display:block;font-family:var(--fontcute);font-size:.86rem;font-weight:600;
+  color:var(--text);margin:0 0 6px 4px}
+.fld .tip{font-size:.75rem;color:var(--muted);margin:6px 0 0 4px;line-height:1.55}
+input,select,textarea{
+  width:100%;font-family:var(--fontbody);font-size:1rem;color:var(--text);background:#fff;
+  border:2px solid var(--line);border-radius:15px;padding:12px 14px;transition:.15s;
+}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--mint-d);box-shadow:0 0 0 4px var(--mint);background:#fff}
+textarea{resize:vertical;min-height:70px;font-size:.95rem}
+.segs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.segs button{font-family:var(--fontcute);font-size:.88rem;padding:11px 4px;border-radius:15px;
+  border:2px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
+.segs button .ic{display:block;font-size:1.05rem;margin-bottom:1px}
+.segs button[aria-pressed="true"]{font-weight:600}
+.segs button[data-p="1"][aria-pressed="true"]{background:var(--rose);color:var(--rose-d)}
+.segs button[data-p="2"][aria-pressed="true"]{background:var(--lemon);color:var(--lemon-d)}
+.segs button[data-p="3"][aria-pressed="true"]{background:var(--mint);color:var(--mint-d)}
+.quick{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.quick button{font-family:var(--fontcute);font-size:.82rem;padding:7px 14px;border-radius:99px;
+  border:2px solid rgba(255,255,255,.8);background:var(--sky);color:var(--sky-d);cursor:pointer}
+.bigbtn{width:100%;margin-top:16px;padding:15px;border:0;border-radius:18px;
+  background:var(--mint-d);color:#fff;font-family:var(--fontcute);font-size:1.06rem;
+  font-weight:600;cursor:pointer;box-shadow:0 4px 0 #3e7762}
+.bigbtn.alt{box-shadow:0 4px 0 #336f74}
+.bigbtn:active{transform:translateY(2px);box-shadow:0 2px 0 #3e7762}
+.bigbtn.alt{background:var(--teal-d)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+
+.searchbar{display:flex;gap:8px;margin-bottom:11px}
+.searchbar input{padding:11px 14px;font-size:.92rem;background:var(--panel);box-shadow:var(--shadow)}
+.searchbar select{width:auto;flex:none;padding:11px 12px;font-size:.86rem;background:var(--panel);box-shadow:var(--shadow)}
+
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+li.item{background:var(--panel);border:2px solid var(--line);border-radius:19px;box-shadow:var(--shadow);
+  padding:13px 13px 13px 11px;display:flex;gap:11px;align-items:flex-start}
+.tick{flex:none;width:27px;height:27px;border-radius:50%;border:2px solid var(--line);
+  background:#fff;cursor:pointer;display:grid;place-items:center;font-size:.82rem;color:transparent;padding:0;transition:.15s}
+li.p1 .tick{border-color:var(--rose)} li.p2 .tick{border-color:var(--lemon)} li.p3 .tick{border-color:var(--mint)}
+li.done .tick{background:var(--mint);border-color:var(--mint);color:var(--mint-d)}
+li.done{opacity:.62}
+li.done .txt{text-decoration:line-through;color:var(--muted)}
+.face{flex:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-size:1.05rem}
+.f-ok{background:var(--mint)} .f-soon{background:var(--lemon)} .f-exp{background:var(--peach)}
+.body{flex:1;min-width:0;padding-top:1px}
+.txt{font-size:1.01rem;font-weight:500;overflow-wrap:anywhere}
+.note{font-size:.85rem;color:var(--muted);margin-top:3px;white-space:pre-wrap;overflow-wrap:anywhere}
+.meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:.75rem;padding:3px 11px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.tag.p1{background:var(--rose);color:var(--rose-d)}
+.tag.p2{background:var(--lemon);color:var(--lemon-d)}
+.tag.p3{background:var(--mint);color:var(--mint-d)}
+.tag.late{background:var(--peach);color:var(--peach-d);font-weight:600}
+.tag.today{background:var(--sky);color:var(--sky-d);font-weight:600}
+.tag.cat{background:var(--lav);color:var(--lav-d)}
+.tag.ok{background:var(--mint);color:var(--mint-d);font-weight:600}
+.tag.soon{background:var(--lemon);color:var(--lemon-d);font-weight:600}
+.tag.bell{background:var(--teal);color:var(--teal-d)}
+.acts{flex:none;display:flex;flex-direction:column;gap:3px}
+.acts button{width:31px;height:31px;border:0;background:transparent;border-radius:10px;
+  font-size:.88rem;color:var(--faint);cursor:pointer;display:grid;place-items:center}
+.acts button:active{background:var(--soft)}
+.empty{text-align:center;padding:40px 20px;color:var(--faint);font-size:.9rem}
+.empty span{display:block;font-size:2.2rem;margin-bottom:8px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.tile{border:2px solid rgba(255,255,255,.75);border-radius:19px;padding:14px;box-shadow:var(--shadow)}
+.tile b{display:block;font-family:var(--fontcute);font-size:1.7rem;font-weight:700;line-height:1.15}
+.tile span{font-size:.8rem;opacity:.9}
+.t-mint{background:var(--mint);color:var(--mint-d)}
+.t-peach{background:var(--peach);color:var(--peach-d)}
+.t-sky{background:var(--sky);color:var(--sky-d)}
+.t-lemon{background:var(--lemon);color:var(--lemon-d)}
+.catrow{display:flex;align-items:center;gap:9px;padding:9px 2px;border-bottom:1px solid var(--line);font-size:.9rem}
+.catrow:last-child{border:0}
+.catrow .dot{width:9px;height:9px;border-radius:50%;background:var(--lav-d);flex:none}
+.catrow .n{margin-inline-start:auto;color:var(--muted);font-size:.82rem}
+.toolbtn{width:100%;margin-top:9px;padding:13px;border:2px solid var(--line);border-radius:17px;
+  background:var(--panel);box-shadow:var(--shadow);font-family:var(--fontcute);font-size:.96rem;
+  font-weight:500;color:var(--text);cursor:pointer;text-align:start}
+.toolbtn:active{background:var(--soft)}
+.hint{font-size:.76rem;color:var(--faint);text-align:center;line-height:1.7;margin:18px 4px 0}
+.msgbox{width:100%;min-height:148px;font-size:.88rem;line-height:1.65;background:var(--soft);
+  border:2px solid var(--line);border-radius:15px;padding:13px;font-family:var(--fontbody);color:var(--text)}
+.switch{display:flex;align-items:center;gap:10px;font-size:.94rem;cursor:pointer}
+.switch input{width:auto;margin:0;width:20px;height:20px;accent-color:var(--mint-d)}
+.infobox{background:var(--teal);color:var(--teal-d);border:2px solid #b8e0e3;border-radius:17px;
+  padding:14px;font-size:.85rem;line-height:1.7;margin-top:11px}
+.infobox b{font-weight:700}
+
+/* rich menu */
+nav.rich{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fffdfa;
+  border:2.5px solid var(--frame);border-bottom:0;
+  border-radius:26px 26px 0 0;box-shadow:0 -6px 26px rgba(120,105,85,.12);
+  padding:0 11px calc(11px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
+.handle{width:100%;height:28px;border:0;background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+.handle i{display:block;width:42px;height:5px;border-radius:99px;background:var(--line)}
+.menugrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;transition:.22s;overflow:hidden}
+body.menu-closed .menugrid{height:0;opacity:0}
+.menugrid button{border:2px solid rgba(255,255,255,.75);border-radius:18px;padding:10px 3px 8px;font-family:inherit;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;transition:.15s;position:relative}
+.menugrid button .ic{font-size:1.38rem;line-height:1}
+.menugrid button .lb{font-family:var(--fontcute);font-size:.74rem;font-weight:600;text-align:center;line-height:1.3}
+.menugrid button:active{transform:scale(.95)}
+.menugrid button[aria-current="true"]{box-shadow:inset 0 0 0 2px currentColor}
+.m-add{background:var(--mint);color:var(--mint-d)}
+.m-today{background:var(--sky);color:var(--sky-d)}
+.m-open{background:var(--lemon);color:var(--lemon-d)}
+.m-late{background:var(--peach);color:var(--peach-d)}
+.m-card{background:var(--teal);color:var(--teal-d)}
+.m-noti{background:var(--rose);color:var(--rose-d)}
+.m-done{background:var(--lav);color:var(--lav-d)}
+.m-sum{background:var(--soft);color:var(--muted)}
+.badge{position:absolute;top:5px;inset-inline-end:6px;min-width:18px;height:18px;padding:0 5px;
+  border-radius:99px;background:#fff;color:inherit;font-size:.68rem;font-weight:700;display:grid;place-items:center}
+.badge[hidden]{display:none}
+
+.mask{position:fixed;inset:0;background:rgba(60,66,74,.42);z-index:50;display:none}
+.mask.on{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;max-width:560px;margin:0 auto;
+  background:var(--panel);border-radius:26px 26px 0 0;padding:8px 16px calc(18px + env(safe-area-inset-bottom));
+  transform:translateY(102%);transition:transform .26s ease;max-height:92vh;overflow:auto}
+.sheet.on{transform:translateY(0)}
+.sheet .bar{width:42px;height:5px;border-radius:99px;background:var(--line);margin:4px auto 14px}
+.sheet h3{margin:0 0 14px 3px;font-family:var(--fontcute);font-size:1.1rem;font-weight:600}
+.sbtns{display:flex;gap:9px;margin-top:16px}
+.sbtns button{flex:1;padding:14px;border:0;border-radius:17px;font-family:var(--fontcute);font-size:1rem;font-weight:600;cursor:pointer}
+.sbtns .save{background:var(--mint-d);color:#fff}
+.sbtns .cancel{background:var(--soft);color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(var(--navh) + 20px);transform:translate(-50%,10px);
+  background:#4a5159;color:#fff;padding:10px 18px;border-radius:99px;font-size:.85rem;
+  opacity:0;pointer-events:none;transition:.24s;z-index:60;max-width:88%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:360px){ .menugrid button .lb{font-size:.64rem} .menugrid button .ic{font-size:1.25rem} }
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#dcf0e7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Lada-Lisa-List">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="logo">🌿</div>
+    <div>
+      <h1>Lada-Lisa-List</h1>
+      <p id="today"></p>
+    </div>
+  </header>
+
+  <div class="alert" id="alertBox" hidden>
+    <span class="ic">🔔</span>
+    <div>
+      <span id="alertText"></span>
+      <button type="button" id="alertGo">ดูรายการ →</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="ring">
+      <svg width="56" height="56" viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="24" fill="none" stroke="#edeae5" stroke-width="7"/>
+        <circle id="arc" cx="28" cy="28" r="24" fill="none" stroke="#4f8f78" stroke-width="7"
+                stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+      </svg>
+      <b id="pct">0%</b>
+    </div>
+    <div class="info">
+      <b id="heroMain">ยังไม่มีรายการ</b>
+      <span id="heroSub">แตะ “เพิ่มงาน” ที่เมนูด้านล่างเพื่อเริ่มจด</span>
+    </div>
+  </div>
+
+  <!-- ===== เพิ่มงาน ===== -->
+  <section class="screen" id="scAdd">
+    <div class="stitle"><i>🌿</i><h2>เพิ่มงานใหม่</h2></div>
+    <form class="card" id="addForm" autocomplete="off">
+      <div class="fld">
+        <label for="fText">สิ่งที่ต้องทำ</label>
+        <input id="fText" placeholder="เช่น เตรียมเครื่องมือเคสเช้า" maxlength="200" required>
+      </div>
+      <div class="fld">
+        <label>ความสำคัญ</label>
+        <div class="segs" id="priSeg">
+          <button type="button" data-p="1" aria-pressed="false"><span class="ic">🌸</span>ด่วน</button>
+          <button type="button" data-p="2" aria-pressed="true"><span class="ic">🍋</span>ปกติ</button>
+          <button type="button" data-p="3" aria-pressed="false"><span class="ic">🌱</span>ทีหลัง</button>
+        </div>
+      </div>
+      <div class="fld">
+        <label for="fDue">กำหนดเสร็จ</label>
+        <input type="date" id="fDue">
+        <div class="quick" id="qAdd">
+          <button type="button" data-d="0">วันนี้</button>
+          <button type="button" data-d="1">พรุ่งนี้</button>
+          <button type="button" data-d="7">อีก 7 วัน</button>
+          <button type="button" data-d="-1">ไม่กำหนด</button>
+        </div>
+      </div>
+      <div class="fld">
+        <label for="fCat">หมวดงาน</label>
+        <input id="fCat" list="catList" placeholder="เช่น งานผ่าตัด / เอกสาร / ประชุม" maxlength="30">
+        <datalist id="catList"></datalist>
+      </div>
+      <div class="fld">
+        <label for="fNote">รายละเอียด (ถ้ามี)</label>
+        <textarea id="fNote" maxlength="600" placeholder="โน้ตสั้น ๆ ไว้เตือนตัวเอง"></textarea>
+      </div>
+      <button class="bigbtn" type="submit">＋ บันทึกลงรายการ</button>
+    </form>
+  </section>
+
+  <!-- ===== รายการงาน ===== -->
+  <section class="screen" id="scList" hidden>
+    <div class="stitle"><i id="lIcon">☀️</i><h2 id="lTitle">วันนี้</h2><span class="cnt" id="lCnt">0</span></div>
+    <div class="searchbar">
+      <input id="q" placeholder="🔍 ค้นหาในรายการ">
+      <select id="sortSel">
+        <option value="due">ตามวันกำหนด</option>
+        <option value="pri">ตามความสำคัญ</option>
+        <option value="new">ใหม่สุดก่อน</option>
+      </select>
+    </div>
+    <ul class="list" id="list"></ul>
+    <div class="empty" id="empty" hidden><span>🍃</span><span id="emptyMsg">ยังไม่มีรายการในหมวดนี้</span></div>
+  </section>
+
+  <!-- ===== บัตร / วันหมดอายุ ===== -->
+  <section class="screen" id="scCard" hidden>
+    <div class="stitle"><i>🪪</i><h2>บัตร & วันหมดอายุ</h2><span class="cnt" id="cCnt">0</span></div>
+
+    <form class="card" id="cardForm" autocomplete="off">
+      <div class="fld">
+        <label for="cName">ชื่อรายการ / บัตร</label>
+        <input id="cName" placeholder="เช่น ใบอนุญาตประกอบวิชาชีพการพยาบาล" maxlength="120" required>
+      </div>
+      <div class="fld">
+        <label for="cType">ประเภท</label>
+        <input id="cType" list="typeList" placeholder="เช่น ใบอนุญาตวิชาชีพ / บัตรข้าราชการ" maxlength="40">
+        <datalist id="typeList">
+          <option value="ใบอนุญาตประกอบวิชาชีพ">
+          <option value="บัตรข้าราชการ / บัตรพนักงาน">
+          <option value="บัตรประชาชน">
+          <option value="ใบรับรองการอบรม / CNEU">
+          <option value="หนังสือเดินทาง">
+          <option value="ใบขับขี่">
+          <option value="ประกัน / สิทธิรักษา">
+          <option value="สัญญา / MOU">
+          <option value="สอบเทียบเครื่องมือแพทย์">
+          <option value="วัสดุ-เวชภัณฑ์หมดอายุ">
+          <option value="อื่น ๆ">
+        </datalist>
+      </div>
+      <div class="two">
+        <div class="fld">
+          <label for="cExp">วันหมดอายุ</label>
+          <input type="date" id="cExp" required>
+        </div>
+        <div class="fld">
+          <label for="cLead">แจ้งเตือนล่วงหน้า</label>
+          <select id="cLead">
+            <option value="7">7 วัน</option>
+            <option value="15">15 วัน</option>
+            <option value="30" selected>30 วัน</option>
+            <option value="45">45 วัน</option>
+            <option value="60">60 วัน</option>
+            <option value="90">90 วัน</option>
+            <option value="120">120 วัน</option>
+            <option value="180">180 วัน</option>
+          </select>
+        </div>
+      </div>
+      <div class="fld">
+        <label for="cNo">เลขที่ / หมายเหตุ</label>
+        <input id="cNo" placeholder="เช่น เลขท้าย 4 ตัว, หน่วยงานที่ออกบัตร" maxlength="80">
+        <p class="tip">⚠️ แนะนำให้ใส่เพียงเลขท้าย 4 ตัว ไม่ควรบันทึกเลขบัตรเต็มไว้ในเบราว์เซอร์</p>
+      </div>
+      <button class="bigbtn alt" type="submit">＋ บันทึกวันหมดอายุ</button>
+    </form>
+
+    <div style="margin-top:16px"></div>
+    <ul class="list" id="cardList"></ul>
+    <div class="empty" id="cardEmpty" hidden><span>🪪</span>ยังไม่มีรายการวันหมดอายุ</div>
+  </section>
+
+  <!-- ===== แจ้งเตือนไลน์ ===== -->
+  <section class="screen" id="scNoti" hidden>
+    <div class="stitle"><i>🔔</i><h2>ตั้งค่าแจ้งเตือนทางไลน์</h2></div>
+
+    <div class="card">
+      <div class="fld">
+        <label class="switch" for="nOn"><input type="checkbox" id="nOn" checked> เปิดการแจ้งเตือนวันหมดอายุ</label>
+      </div>
+      <div class="fld">
+        <label for="nLine">LINE ID / ชื่อบัญชีที่จะรับแจ้งเตือน</label>
+        <input id="nLine" placeholder="เช่น @waraporn หรือ ชื่อกลุ่ม OR พุทธโสธร" maxlength="60">
+      </div>
+      <div class="two">
+        <div class="fld">
+          <label for="nLead">แจ้งเตือนล่วงหน้า (ค่าเริ่มต้น)</label>
+          <select id="nLead">
+            <option value="7">7 วัน</option>
+            <option value="15">15 วัน</option>
+            <option value="30" selected>30 วัน</option>
+            <option value="45">45 วัน</option>
+            <option value="60">60 วัน</option>
+            <option value="90">90 วัน</option>
+            <option value="120">120 วัน</option>
+            <option value="180">180 วัน</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="nTime">เวลาที่ต้องการให้เตือน</label>
+          <input type="time" id="nTime" value="08:00">
+        </div>
+      </div>
+      <p class="tip" style="margin-top:4px">ค่าล่วงหน้านี้ใช้กับรายการใหม่ ส่วนรายการที่บันทึกไว้แล้วตั้งแยกได้ในแต่ละรายการ</p>
+      <button class="bigbtn" type="button" id="nSave">บันทึกการตั้งค่า</button>
+    </div>
+
+    <div class="card">
+      <div class="fld">
+        <label for="msgBox">ข้อความแจ้งเตือนวันนี้ (คัดลอกไปวางในไลน์ได้)</label>
+        <textarea class="msgbox" id="msgBox" readonly></textarea>
+      </div>
+      <div class="two">
+        <button class="toolbtn" style="margin-top:0" id="msgMake">🔄　สร้างข้อความใหม่</button>
+        <button class="toolbtn" style="margin-top:0" id="msgCopy">📋　คัดลอกข้อความ</button>
+      </div>
+    </div>
+
+    <div class="infobox">
+      <b>ข้อจำกัดที่ควรทราบ:</b> หน้าเว็บนี้ส่งข้อความเข้าไลน์เองโดยอัตโนมัติไม่ได้ เพราะเบราว์เซอร์ปิดกั้นการเรียก LINE API จากหน้าเว็บโดยตรง
+      สิ่งที่แอพทำได้คือ เตือนในแอพเมื่อเปิดใช้ และสร้างข้อความพร้อมคัดลอกไปวางในไลน์
+      <br><br>ถ้าต้องการให้ <b>ส่งเข้าไลน์อัตโนมัติทุกวัน</b> ต้องมีตัวกลางฝั่งเซิร์ฟเวอร์ เช่น Google Sheet + Apps Script เชื่อม LINE Messaging API
+      แล้วตั้ง trigger รายวันตามเวลาที่เลือกไว้ — แจ้งได้เลยหากต้องการชุดโค้ดและขั้นตอนติดตั้ง
+    </div>
+  </section>
+
+  <!-- ===== สรุป ===== -->
+  <section class="screen" id="scSum" hidden>
+    <div class="stitle"><i>🫧</i><h2>สรุปภาพรวม</h2></div>
+    <div class="grid2">
+      <div class="tile t-sky"><b id="uAll">0</b><span>งานทั้งหมด</span></div>
+      <div class="tile t-mint"><b id="uDone">0</b><span>เสร็จแล้ว</span></div>
+      <div class="tile t-lemon"><b id="uOpen">0</b><span>ยังค้างอยู่</span></div>
+      <div class="tile t-peach"><b id="uLate">0</b><span>เลยกำหนด</span></div>
+    </div>
+    <div class="grid2">
+      <div class="tile" style="background:var(--teal);color:var(--teal-d)"><b id="uCard">0</b><span>บัตร/รายการหมดอายุที่ติดตาม</span></div>
+      <div class="tile" style="background:var(--rose);color:var(--rose-d)"><b id="uSoon">0</b><span>ใกล้หมดอายุ/หมดอายุแล้ว</span></div>
+    </div>
+    <div class="card" id="catBox" style="margin-top:9px"></div>
+    <button class="toolbtn" id="copyBtn">📋　คัดลอกรายการงานที่ค้างอยู่</button>
+    <button class="toolbtn" id="clearDone">🧺　ลบรายการที่เสร็จแล้วทั้งหมด</button>
+    <button class="toolbtn" id="expBtn">💾　สำรองข้อมูล (คัดลอกเป็น JSON)</button>
+    <button class="toolbtn" id="impBtn">📥　กู้คืนข้อมูลจาก JSON</button>
+    <p class="hint">
+      ข้อมูลเก็บไว้ในเครื่องนี้เท่านั้น เปิดลิงก์เดิมในอุปกรณ์เดิมจะเห็นรายการเดิม<br>
+      พัฒนาโดย พว.วราภรณ์ ปรุงสิงห์ กลุ่มงานการพยาบาลผู้ป่วยห้องผ่าตัด ๒๕๖๙
+    </p>
+  </section>
+</div>
+
+<!-- ===== rich menu ===== -->
+<nav class="rich">
+  <button class="handle" id="handle" title="ย่อ/ขยายเมนู"><i></i></button>
+  <div class="menugrid" id="menu">
+    <button class="m-add"   data-go="add"><span class="ic">📝</span><span class="lb">เพิ่มงาน</span></button>
+    <button class="m-today" data-go="today"><span class="ic">☀️</span><span class="lb">วันนี้</span><span class="badge" id="bToday" hidden></span></button>
+    <button class="m-open"  data-go="open"><span class="ic">📋</span><span class="lb">ค้างอยู่</span><span class="badge" id="bOpen" hidden></span></button>
+    <button class="m-late"  data-go="late"><span class="ic">⏰</span><span class="lb">เลยกำหนด</span><span class="badge" id="bLate" hidden></span></button>
+    <button class="m-card"  data-go="card"><span class="ic">🪪</span><span class="lb">วันหมดอายุ</span><span class="badge" id="bCard" hidden></span></button>
+    <button class="m-noti"  data-go="noti"><span class="ic">🔔</span><span class="lb">แจ้งเตือนไลน์</span></button>
+    <button class="m-done"  data-go="done"><span class="ic">✅</span><span class="lb">เสร็จแล้ว</span></button>
+    <button class="m-sum"   data-go="sum"><span class="ic">🫧</span><span class="lb">สรุป</span></button>
+  </div>
+</nav>
+
+<!-- ===== sheet: แก้ไขงาน ===== -->
+<div class="mask" id="mask"></div>
+<div class="sheet" id="sheet">
+  <div class="bar"></div>
+  <h3>แก้ไขรายการงาน</h3>
+  <div class="fld"><label for="eText">สิ่งที่ต้องทำ</label><input id="eText" maxlength="200"></div>
+  <div class="fld">
+    <label>ความสำคัญ</label>
+    <div class="segs" id="ePriSeg">
+      <button type="button" data-p="1"><span class="ic">🌸</span>ด่วน</button>
+      <button type="button" data-p="2"><span class="ic">🍋</span>ปกติ</button>
+      <button type="button" data-p="3"><span class="ic">🌱</span>ทีหลัง</button>
+    </div>
+  </div>
+  <div class="two">
+    <div class="fld"><label for="eDue">กำหนดเสร็จ</label><input type="date" id="eDue"></div>
+    <div class="fld"><label for="eCat">หมวดงาน</label><input id="eCat" list="catList" maxlength="30"></div>
+  </div>
+  <div class="fld"><label for="eNote">รายละเอียด</label><textarea id="eNote" maxlength="600"></textarea></div>
+  <div class="sbtns">
+    <button class="cancel" id="eCancel" type="button">ยกเลิก</button>
+    <button class="save" id="eSave" type="button">บันทึก</button>
+  </div>
+</div>
+
+<!-- ===== sheet: แก้ไขบัตร ===== -->
+<div class="sheet" id="cSheet">
+  <div class="bar"></div>
+  <h3>แก้ไข / ต่ออายุ</h3>
+  <div class="fld"><label for="xName">ชื่อรายการ</label><input id="xName" maxlength="120"></div>
+  <div class="fld"><label for="xType">ประเภท</label><input id="xType" list="typeList" maxlength="40"></div>
+  <div class="two">
+    <div class="fld"><label for="xExp">วันหมดอายุ</label><input type="date" id="xExp"></div>
+    <div class="fld"><label for="xLead">แจ้งเตือนล่วงหน้า</label>
+      <select id="xLead">
+        <option value="7">7 วัน</option><option value="15">15 วัน</option><option value="30">30 วัน</option>
+        <option value="45">45 วัน</option><option value="60">60 วัน</option><option value="90">90 วัน</option>
+        <option value="120">120 วัน</option><option value="180">180 วัน</option>
+      </select>
+    </div>
+  </div>
+  <div class="quick" id="qRenew">
+    <button type="button" data-y="1">ต่ออายุ +1 ปี</button>
+    <button type="button" data-y="2">+2 ปี</button>
+    <button type="button" data-y="5">+5 ปี</button>
+  </div>
+  <div class="fld" style="margin-top:12px"><label for="xNo">เลขที่ / หมายเหตุ</label><input id="xNo" maxlength="80"></div>
+  <div class="sbtns">
+    <button class="cancel" id="xCancel" type="button">ยกเลิก</button>
+    <button class="save" id="xSave" type="button">บันทึก</button>
+  </div>
+</div>
+
+<!-- ===== sheet: กู้คืนข้อมูล ===== -->
+<div class="sheet" id="iSheet">
+  <div class="bar"></div>
+  <h3>กู้คืน / ย้ายข้อมูล</h3>
+  <div class="fld">
+    <label for="impBox">วางข้อความ JSON ที่สำรองไว้</label>
+    <textarea class="msgbox" id="impBox" placeholder='{"tasks":[...],"cards":[...]}'></textarea>
+    <p class="tip">ใช้ย้ายรายการจากเครื่องเดิมหรือจากลิงก์เดิมมาที่แอพที่ติดตั้งใหม่ — กดสำรองข้อมูลที่เครื่องเดิม แล้วนำมาวางที่นี่</p>
+  </div>
+  <div class="sbtns">
+    <button class="cancel" id="iCancel" type="button">ยกเลิก</button>
+    <button class="save" id="iMerge" type="button">รวมกับของเดิม</button>
+  </div>
+  <button class="toolbtn" id="iReplace" type="button"
+          style="background:var(--peach);color:var(--peach-d);box-shadow:none">⚠️　แทนที่ข้อมูลทั้งหมด</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="or-todo-v1", CKEY="or-cards-v1", NKEY="or-noti-v1", MKEY="or-todo-menu";
+var tasks=[], cards=[], cfg={on:true,lineId:"",lead:30,time:"08:00"};
+var view="today", sortBy="due", query="", editing=null, cEditing=null, newPri=2, ePri=2;
+var $=function(id){ return document.getElementById(id); };
+
+/* ---------- storage ---------- */
+function load(){
+  try{ var a=JSON.parse(localStorage.getItem(KEY)||"[]"); if(Array.isArray(a)) tasks=a; }catch(e){}
+  try{ var b=JSON.parse(localStorage.getItem(CKEY)||"[]"); if(Array.isArray(b)) cards=b; }catch(e){}
+  try{ var c=JSON.parse(localStorage.getItem(NKEY)||"null");
+       if(c&&typeof c==="object"){ cfg.on=c.on!==false; cfg.lineId=c.lineId||""; cfg.lead=+c.lead||30; cfg.time=c.time||"08:00"; } }catch(e){}
+  try{ if(localStorage.getItem(MKEY)==="closed") document.body.classList.add("menu-closed"); }catch(e){}
+}
+function saveT(){ try{ localStorage.setItem(KEY,JSON.stringify(tasks)); }catch(e){} }
+function saveC(){ try{ localStorage.setItem(CKEY,JSON.stringify(cards)); }catch(e){} }
+function saveN(){ try{ localStorage.setItem(NKEY,JSON.stringify(cfg)); }catch(e){} }
+
+/* ---------- helpers ---------- */
+function pad(n){ return (n<10?"0":"")+n; }
+function dstr(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function thDate(s){
+  if(!s) return "";
+  var p=s.split("-"), d=new Date(+p[0],+p[1]-1,+p[2]);
+  try{ return d.toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"2-digit"}); }catch(e){ return s; }
+}
+function diff(s){
+  if(!s) return null;
+  var p=s.split("-"), a=new Date(+p[0],+p[1]-1,+p[2]), b=new Date();
+  a.setHours(0,0,0,0); b.setHours(0,0,0,0);
+  return Math.round((a-b)/86400000);
+}
+function addYears(s,y){
+  var p=(s||dstr(new Date())).split("-"), d=new Date(+p[0],+p[1]-1,+p[2]);
+  d.setFullYear(d.getFullYear()+y); return dstr(d);
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function priTxt(p){ return p===1?"🌸 ด่วน":p===3?"🌱 ทีหลัง":"🍋 ปกติ"; }
+function toast(m){
+  var t=$("toast"); t.textContent=m; t.classList.add("on");
+  clearTimeout(toast._h); toast._h=setTimeout(function(){ t.classList.remove("on"); },2200);
+}
+function copyText(text,okMsg){
+  var ok=function(){ toast(okMsg); };
+  try{ navigator.clipboard.writeText(text).then(ok,function(){ fb(text,ok); }); }
+  catch(e){ fb(text,ok); }
+}
+function fb(text,ok){
+  try{
+    var ta=document.createElement("textarea");
+    ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta); ok();
+  }catch(e){ toast("คัดลอกไม่ได้ในเบราว์เซอร์นี้ ลองกดค้างที่ข้อความเพื่อคัดลอก"); }
+}
+
+/* ---------- tasks ---------- */
+var META={
+  today:{ic:"☀️",label:"วันนี้",empty:"วันนี้ยังไม่มีงานค้าง สบายใจได้ 🍃"},
+  open: {ic:"📋",label:"ค้างอยู่",empty:"ไม่มีงานค้างอยู่เลย เยี่ยมมาก 🌿"},
+  late: {ic:"⏰",label:"เลยกำหนด",empty:"ไม่มีงานเลยกำหนด ดีมาก 🌸"},
+  done: {ic:"✅",label:"เสร็จแล้ว",empty:"ยังไม่มีรายการที่ทำเสร็จ"}
+};
+function inView(t,k){
+  var d=diff(t.due);
+  if(k==="open")  return !t.done;
+  if(k==="done")  return !!t.done;
+  if(k==="today") return !t.done && d!==null && d<=0;
+  if(k==="late")  return !t.done && d!==null && d<0;
+  return true;
+}
+function cmpDue(x,y){
+  if(x.due&&y.due) return x.due<y.due?-1:x.due>y.due?1:0;
+  if(x.due) return -1; if(y.due) return 1; return 0;
+}
+function rows(){
+  var q=query.trim().toLowerCase();
+  var a=tasks.filter(function(t){
+    if(!inView(t,view)) return false;
+    if(!q) return true;
+    return (t.text+" "+(t.note||"")+" "+(t.cat||"")).toLowerCase().indexOf(q)>=0;
+  });
+  a.sort(function(x,y){
+    if(!!x.done!==!!y.done) return x.done?1:-1;
+    if(sortBy==="new") return y.created-x.created;
+    if(sortBy==="pri") return (x.pri-y.pri)||cmpDue(x,y)||(y.created-x.created);
+    return cmpDue(x,y)||(x.pri-y.pri)||(y.created-x.created);
+  });
+  return a;
+}
+
+/* ---------- cards ---------- */
+function cStat(c){
+  var d=diff(c.exp), lead=+c.lead||cfg.lead;
+  if(d===null) return {k:"ok",d:null};
+  if(d<0)      return {k:"exp",d:d};
+  if(d<=lead)  return {k:"soon",d:d};
+  return {k:"ok",d:d};
+}
+function cardsSorted(){
+  return cards.slice().sort(function(a,b){
+    if(a.exp&&b.exp) return a.exp<b.exp?-1:a.exp>b.exp?1:0;
+    if(a.exp) return -1; if(b.exp) return 1; return 0;
+  });
+}
+function cardsAlert(){ return cards.filter(function(c){ return cStat(c).k!=="ok"; }); }
+
+/* ---------- message for LINE ---------- */
+function buildMsg(){
+  var out=["🔔 แจ้งเตือนวันหมดอายุ — "+thDate(dstr(new Date()))];
+  if(cfg.lineId) out.push("ถึง: "+cfg.lineId);
+  var ex=[], so=[];
+  cardsSorted().forEach(function(c){
+    var s=cStat(c);
+    if(s.k==="exp") ex.push("• "+c.name+(c.type?" ("+c.type+")":"")+" — หมดอายุ "+thDate(c.exp)+" เลยมาแล้ว "+(-s.d)+" วัน");
+    else if(s.k==="soon") so.push("• "+c.name+(c.type?" ("+c.type+")":"")+" — หมดอายุ "+thDate(c.exp)+" อีก "+s.d+" วัน");
+  });
+  if(ex.length){ out.push(""); out.push("❗ หมดอายุแล้ว"); out=out.concat(ex); }
+  if(so.length){ out.push(""); out.push("⚠️ ใกล้หมดอายุ"); out=out.concat(so); }
+  var late=tasks.filter(function(t){ return inView(t,"late"); }),
+      tdy=tasks.filter(function(t){ return !t.done && diff(t.due)===0; });
+  if(late.length||tdy.length){
+    out.push(""); out.push("📝 งานที่ต้องทำ");
+    late.forEach(function(t){ out.push("• "+t.text+" (เลยกำหนด "+(-diff(t.due))+" วัน)"); });
+    tdy.forEach(function(t){ out.push("• "+t.text+" (ถึงกำหนดวันนี้)"); });
+  }
+  if(!ex.length&&!so.length&&!late.length&&!tdy.length)
+    out.push("", "✅ ไม่มีรายการใกล้หมดอายุหรือเลยกำหนด");
+  out.push("", "— จากแอพ Lada-Lisa-List กลุ่มงานการพยาบาลผู้ป่วยห้องผ่าตัด");
+  return out.join("\n");
+}
+
+/* ---------- render ---------- */
+function render(){
+  var all=tasks.length,
+      done=tasks.filter(function(t){ return t.done; }).length,
+      open=all-done,
+      late=tasks.filter(function(t){ return inView(t,"late"); }).length,
+      tdy=tasks.filter(function(t){ return inView(t,"today"); }).length,
+      al=cardsAlert();
+
+  var p=all?Math.round(done/all*100):0;
+  $("pct").textContent=p+"%";
+  $("arc").setAttribute("stroke-dashoffset", String(150.8*(1-p/100)));
+  if(!all){
+    $("heroMain").textContent="ยังไม่มีรายการงาน";
+    $("heroSub").textContent="แตะ “เพิ่มงาน” ที่เมนูด้านล่างเพื่อเริ่มจด";
+  }else if(!open){
+    $("heroMain").textContent="ทำครบทุกรายการแล้ว 🎉";
+    $("heroSub").textContent="เสร็จทั้งหมด "+done+" รายการ";
+  }else{
+    $("heroMain").textContent="เหลืออีก "+open+" รายการ";
+    $("heroSub").textContent=(tdy?"ถึงกำหนดวันนี้ "+tdy+" รายการ":"ยังไม่มีงานถึงกำหนดวันนี้")+(late?" · เลยกำหนด "+late:"");
+  }
+
+  /* alert banner */
+  if(cfg.on && al.length){
+    var nExp=al.filter(function(c){ return cStat(c).k==="exp"; }).length;
+    $("alertText").innerHTML="<b>มี "+al.length+" รายการต้องดูแล</b> — "+
+      (nExp?"หมดอายุแล้ว "+nExp+" รายการ":"")+
+      (nExp&&al.length-nExp?" · ":"")+
+      (al.length-nExp?"ใกล้หมดอายุ "+(al.length-nExp)+" รายการ":"");
+    $("alertBox").hidden=false;
+  }else $("alertBox").hidden=true;
+
+  [["bToday",tdy],["bOpen",open],["bLate",late],["bCard",al.length]].forEach(function(x){
+    var el=$(x[0]); el.textContent=x[1]; el.hidden=!x[1];
+  });
+
+  var cats={}; tasks.forEach(function(t){ if(t.cat) cats[t.cat]=(cats[t.cat]||0)+1; });
+  $("catList").innerHTML=Object.keys(cats).map(function(c){ return '<option value="'+esc(c)+'">'; }).join("");
+
+  Array.prototype.forEach.call($("menu").children,function(b){
+    b.setAttribute("aria-current", b.dataset.go===view?"true":"false");
+  });
+
+  $("scAdd").hidden  = view!=="add";
+  $("scCard").hidden = view!=="card";
+  $("scNoti").hidden = view!=="noti";
+  $("scSum").hidden  = view!=="sum";
+  $("scList").hidden = ["add","card","noti","sum"].indexOf(view)>=0;
+
+  /* ---- cards screen ---- */
+  if(view==="card"){
+    var cs=cardsSorted(), out="";
+    $("cCnt").textContent=cs.length;
+    cs.forEach(function(c){
+      var s=cStat(c), face="f-ok", ic="🪪", tag="";
+      if(s.k==="exp"){ face="f-exp"; ic="❗";
+        tag='<span class="tag late">หมดอายุแล้ว '+(-s.d)+' วัน</span>'; }
+      else if(s.k==="soon"){ face="f-soon"; ic="⚠️";
+        tag='<span class="tag soon">อีก '+s.d+' วัน</span>'; }
+      else { tag='<span class="tag ok">'+(s.d===null?"ไม่ระบุวัน":"อีก "+s.d+" วัน")+'</span>'; }
+      out+='<li class="item" data-id="'+c.id+'">'+
+        '<div class="face '+face+'">'+ic+'</div>'+
+        '<div class="body"><div class="txt">'+esc(c.name)+'</div>'+
+        (c.no?'<div class="note">'+esc(c.no)+'</div>':"")+
+        '<div class="meta">'+tag+
+        (c.exp?'<span class="tag">📅 '+esc(thDate(c.exp))+'</span>':"")+
+        (c.type?'<span class="tag cat">'+esc(c.type)+'</span>':"")+
+        '<span class="tag bell">🔔 ล่วงหน้า '+(+c.lead||cfg.lead)+' วัน</span>'+
+        '</div></div>'+
+        '<div class="acts"><button data-cact="edit" aria-label="แก้ไข">✏️</button>'+
+        '<button data-cact="del" aria-label="ลบ">🗑️</button></div></li>';
+    });
+    $("cardList").innerHTML=out;
+    $("cardEmpty").hidden=cs.length>0;
+    return;
+  }
+
+  if(view==="noti"){
+    $("nOn").checked=cfg.on; $("nLine").value=cfg.lineId;
+    $("nLead").value=String(cfg.lead); $("nTime").value=cfg.time;
+    $("msgBox").value=buildMsg();
+    return;
+  }
+
+  if(view==="sum"){
+    $("uAll").textContent=all; $("uDone").textContent=done;
+    $("uOpen").textContent=open; $("uLate").textContent=late;
+    $("uCard").textContent=cards.length; $("uSoon").textContent=al.length;
+    var keys=Object.keys(cats);
+    $("catBox").innerHTML = keys.length
+      ? keys.sort(function(a,b){ return cats[b]-cats[a]; }).map(function(c){
+          return '<div class="catrow"><span class="dot"></span>'+esc(c)+'<span class="n">'+cats[c]+' รายการ</span></div>';
+        }).join("")
+      : '<div class="catrow" style="color:var(--faint)">ยังไม่ได้ใส่หมวดงาน</div>';
+    return;
+  }
+  if(view==="add") return;
+
+  /* ---- task list ---- */
+  var m=META[view]||META.open, r=rows();
+  $("lIcon").textContent=m.ic; $("lTitle").textContent=m.label; $("lCnt").textContent=r.length;
+  $("emptyMsg").textContent=query.trim()?"ไม่พบรายการที่ค้นหา":m.empty;
+  var o="";
+  r.forEach(function(t){
+    var d=diff(t.due), due="";
+    if(t.due){
+      var lbl,cls="";
+      if(t.done){ lbl=thDate(t.due); }
+      else if(d===0){ lbl="วันนี้"; cls="today"; }
+      else if(d===1){ lbl="พรุ่งนี้"; cls="today"; }
+      else if(d<0){ lbl="เลย "+(-d)+" วัน"; cls="late"; }
+      else { lbl=thDate(t.due)+" (อีก "+d+" วัน)"; }
+      due='<span class="tag '+cls+'">📅 '+esc(lbl)+'</span>';
+    }
+    o+='<li class="item p'+t.pri+(t.done?" done":"")+'" data-id="'+t.id+'">'+
+      '<button class="tick" data-act="tick" aria-label="ทำเสร็จ">✓</button>'+
+      '<div class="body"><div class="txt">'+esc(t.text)+'</div>'+
+      (t.note?'<div class="note">'+esc(t.note)+'</div>':"")+
+      '<div class="meta"><span class="tag p'+t.pri+'">'+priTxt(t.pri)+'</span>'+due+
+      (t.cat?'<span class="tag cat">'+esc(t.cat)+'</span>':"")+'</div></div>'+
+      '<div class="acts"><button data-act="edit" aria-label="แก้ไข">✏️</button>'+
+      '<button data-act="del" aria-label="ลบ">🗑️</button></div></li>';
+  });
+  $("list").innerHTML=o;
+  $("empty").hidden=r.length>0;
+}
+function go(v){
+  view=v; query=""; $("q").value=""; render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ---------- menu ---------- */
+$("menu").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-go]"); if(!b) return;
+  go(b.dataset.go);
+  if(view==="add") setTimeout(function(){ $("fText").focus(); },260);
+});
+$("handle").addEventListener("click",function(){
+  var closed=document.body.classList.toggle("menu-closed");
+  try{ localStorage.setItem(MKEY,closed?"closed":"open"); }catch(e){}
+});
+$("alertGo").addEventListener("click",function(){ go("card"); });
+
+/* ---------- add task ---------- */
+$("priSeg").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-p]"); if(!b) return;
+  newPri=+b.dataset.p;
+  Array.prototype.forEach.call(this.children,function(x){
+    x.setAttribute("aria-pressed", x===b?"true":"false"); });
+});
+$("qAdd").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-d]"); if(!b) return;
+  var n=+b.dataset.d;
+  if(n<0){ $("fDue").value=""; return; }
+  var d=new Date(); d.setDate(d.getDate()+n); $("fDue").value=dstr(d);
+});
+$("addForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var txt=$("fText").value.trim(); if(!txt) return;
+  tasks.push({ id:uid(), text:txt, note:$("fNote").value.trim(), pri:newPri,
+    due:$("fDue").value||"", cat:$("fCat").value.trim(), done:false, created:Date.now() });
+  saveT(); $("fText").value=""; $("fNote").value=""; $("fDue").value="";
+  render(); toast("บันทึกแล้ว ✓"); $("fText").focus();
+});
+
+/* ---------- task list actions ---------- */
+$("q").addEventListener("input",function(e){ query=e.target.value; render(); });
+$("sortSel").addEventListener("change",function(e){ sortBy=e.target.value; render(); });
+$("list").addEventListener("click",function(e){
+  var btn=e.target.closest("[data-act]"); if(!btn) return;
+  var id=e.target.closest("li.item").dataset.id;
+  var i=tasks.findIndex(function(t){ return t.id===id; }); if(i<0) return;
+  var a=btn.dataset.act;
+  if(a==="tick"){
+    tasks[i].done=!tasks[i].done; tasks[i].doneAt=tasks[i].done?Date.now():0;
+    saveT(); render(); if(tasks[i].done) toast("เยี่ยม! ทำเสร็จแล้ว 🌿");
+  }else if(a==="del"){ tasks.splice(i,1); saveT(); render(); toast("ลบรายการแล้ว"); }
+  else{ openEdit(tasks[i]); }
+});
+
+/* ---------- edit task sheet ---------- */
+function setEPri(p){
+  ePri=p;
+  Array.prototype.forEach.call($("ePriSeg").children,function(x){
+    x.setAttribute("aria-pressed", +x.dataset.p===p?"true":"false"); });
+}
+$("ePriSeg").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-p]"); if(b) setEPri(+b.dataset.p);
+});
+function openEdit(t){
+  editing=t.id;
+  $("eText").value=t.text; $("eNote").value=t.note||"";
+  $("eDue").value=t.due||""; $("eCat").value=t.cat||"";
+  setEPri(t.pri);
+  $("mask").classList.add("on"); $("sheet").classList.add("on");
+}
+function closeAll(){
+  $("mask").classList.remove("on");
+  $("sheet").classList.remove("on"); $("cSheet").classList.remove("on");
+  $("iSheet").classList.remove("on");
+  editing=null; cEditing=null;
+}
+$("eCancel").addEventListener("click",closeAll);
+$("mask").addEventListener("click",closeAll);
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeAll(); });
+$("eSave").addEventListener("click",function(){
+  var i=tasks.findIndex(function(t){ return t.id===editing; }); if(i<0) return closeAll();
+  var txt=$("eText").value.trim(); if(!txt){ $("eText").focus(); return; }
+  tasks[i].text=txt; tasks[i].note=$("eNote").value.trim(); tasks[i].pri=ePri;
+  tasks[i].due=$("eDue").value||""; tasks[i].cat=$("eCat").value.trim();
+  saveT(); closeAll(); render(); toast("แก้ไขเรียบร้อย ✓");
+});
+
+/* ---------- cards ---------- */
+$("cardForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var n=$("cName").value.trim(), ex=$("cExp").value;
+  if(!n||!ex){ toast("กรอกชื่อรายการและวันหมดอายุ"); return; }
+  cards.push({ id:uid(), name:n, type:$("cType").value.trim(), no:$("cNo").value.trim(),
+    exp:ex, lead:+$("cLead").value, created:Date.now() });
+  saveC();
+  $("cName").value=""; $("cType").value=""; $("cNo").value=""; $("cExp").value="";
+  render(); toast("บันทึกวันหมดอายุแล้ว ✓");
+});
+$("cardList").addEventListener("click",function(e){
+  var btn=e.target.closest("[data-cact]"); if(!btn) return;
+  var id=e.target.closest("li.item").dataset.id;
+  var i=cards.findIndex(function(c){ return c.id===id; }); if(i<0) return;
+  if(btn.dataset.cact==="del"){ cards.splice(i,1); saveC(); render(); toast("ลบรายการแล้ว"); }
+  else openCard(cards[i]);
+});
+function openCard(c){
+  cEditing=c.id;
+  $("xName").value=c.name; $("xType").value=c.type||"";
+  $("xExp").value=c.exp||""; $("xNo").value=c.no||"";
+  $("xLead").value=String(+c.lead||cfg.lead);
+  $("mask").classList.add("on"); $("cSheet").classList.add("on");
+}
+$("xCancel").addEventListener("click",closeAll);
+$("qRenew").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-y]"); if(!b) return;
+  $("xExp").value=addYears($("xExp").value,+b.dataset.y);
+  toast("เลื่อนวันหมดอายุไป "+b.dataset.y+" ปี — กดบันทึกเพื่อยืนยัน");
+});
+$("xSave").addEventListener("click",function(){
+  var i=cards.findIndex(function(c){ return c.id===cEditing; }); if(i<0) return closeAll();
+  var n=$("xName").value.trim(); if(!n){ $("xName").focus(); return; }
+  cards[i].name=n; cards[i].type=$("xType").value.trim();
+  cards[i].exp=$("xExp").value||""; cards[i].no=$("xNo").value.trim();
+  cards[i].lead=+$("xLead").value;
+  saveC(); closeAll(); render(); toast("บันทึกเรียบร้อย ✓");
+});
+
+/* ---------- notification settings ---------- */
+$("nSave").addEventListener("click",function(){
+  cfg.on=$("nOn").checked;
+  cfg.lineId=$("nLine").value.trim();
+  cfg.lead=+$("nLead").value;
+  cfg.time=$("nTime").value||"08:00";
+  saveN();
+  $("cLead").value=String(cfg.lead);
+  render(); toast("บันทึกการตั้งค่าแจ้งเตือนแล้ว ✓");
+});
+$("msgMake").addEventListener("click",function(){ $("msgBox").value=buildMsg(); toast("สร้างข้อความใหม่แล้ว"); });
+$("msgCopy").addEventListener("click",function(){
+  var t=$("msgBox").value||buildMsg();
+  copyText(t,"คัดลอกแล้ว นำไปวางในไลน์ได้เลย");
+});
+
+/* ---------- summary tools ---------- */
+$("clearDone").addEventListener("click",function(){
+  var n=tasks.filter(function(t){ return t.done; }).length;
+  if(!n) return toast("ยังไม่มีรายการที่เสร็จแล้ว");
+  tasks=tasks.filter(function(t){ return !t.done; });
+  saveT(); render(); toast("ลบแล้ว "+n+" รายการ");
+});
+$("copyBtn").addEventListener("click",function(){
+  var list=tasks.filter(function(t){ return !t.done; })
+    .sort(function(x,y){ return cmpDue(x,y)||(x.pri-y.pri); });
+  if(!list.length) return toast("ไม่มีงานค้างให้คัดลอก");
+  var text="📝 สิ่งที่ต้องทำ — "+thDate(dstr(new Date()))+"\n"+
+    list.map(function(t){
+      return "• "+t.text+(t.due?" (กำหนด "+thDate(t.due)+")":"")+
+        (t.pri===1?" [ด่วน]":"")+(t.cat?" — "+t.cat:"");
+    }).join("\n");
+  copyText(text,"คัดลอกแล้ว นำไปวางในไลน์ได้เลย");
+});
+
+/* ---------- backup / restore ---------- */
+$("expBtn").addEventListener("click",function(){
+  var pack={ app:"or-todo", v:1, at:new Date().toISOString(), tasks:tasks, cards:cards, cfg:cfg };
+  copyText(JSON.stringify(pack),"คัดลอกข้อมูลสำรองแล้ว นำไปวางเก็บในโน้ตหรือไลน์ได้");
+});
+$("impBtn").addEventListener("click",function(){
+  $("impBox").value="";
+  $("mask").classList.add("on"); $("iSheet").classList.add("on");
+});
+$("iCancel").addEventListener("click",closeAll);
+function doImport(replace){
+  var pack;
+  try{ pack=JSON.parse($("impBox").value.trim()); }
+  catch(e){ toast("ข้อความ JSON ไม่ถูกต้อง ลองคัดลอกใหม่"); return; }
+  if(!pack||typeof pack!=="object"){ toast("ข้อมูลไม่ถูกต้อง"); return; }
+  var nt=Array.isArray(pack.tasks)?pack.tasks:[], nc=Array.isArray(pack.cards)?pack.cards:[];
+  if(!nt.length&&!nc.length){ toast("ไม่พบรายการในข้อมูลนี้"); return; }
+  if(replace){ tasks=nt.slice(); cards=nc.slice(); }
+  else{
+    var ti={}, ci={};
+    tasks.forEach(function(t){ ti[t.id]=1; }); cards.forEach(function(c){ ci[c.id]=1; });
+    nt.forEach(function(t){ if(t&&t.id&&!ti[t.id]) tasks.push(t); });
+    nc.forEach(function(c){ if(c&&c.id&&!ci[c.id]) cards.push(c); });
+  }
+  if(pack.cfg&&typeof pack.cfg==="object"){
+    cfg.lineId=pack.cfg.lineId||cfg.lineId;
+    cfg.lead=+pack.cfg.lead||cfg.lead;
+    cfg.time=pack.cfg.time||cfg.time;
+    if(typeof pack.cfg.on==="boolean") cfg.on=pack.cfg.on;
+    saveN();
+  }
+  saveT(); saveC(); closeAll(); render();
+  toast((replace?"แทนที่":"รวม")+"ข้อมูลแล้ว — งาน "+tasks.length+" · วันหมดอายุ "+cards.length);
+}
+$("iMerge").addEventListener("click",function(){ doImport(false); });
+$("iReplace").addEventListener("click",function(){ doImport(true); });
+
+/* ---------- start ---------- */
+load();
+try{
+  $("today").textContent=new Date().toLocaleDateString("th-TH",
+    {weekday:"long",day:"numeric",month:"long",year:"numeric"});
+}catch(e){ $("today").textContent=dstr(new Date()); }
+$("cLead").value=String(cfg.lead);
+if(cfg.on && cardsAlert().length) view="card";
+else if(!tasks.length && !cards.length) view="add";
+render();
+})();
+</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
